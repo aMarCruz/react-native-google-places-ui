@@ -1,5 +1,6 @@
 # React Native Google Places UI
 
+[![npm][npm-image]](https://www.npmjs.com/package/react-native-google-places-ui)
 [![License][license-image]](LICENSE)
 
 React native implementation of the Google Places UI widgets (only for Android for now).
@@ -10,11 +11,13 @@ React native implementation of the Google Places UI widgets (only for Android fo
 
 Requeriments:
 * React Native v0.50.0 or later (not tested with previous versions).
-* Google Place Services v11.2 or later
+* Google Play Services v11.2 or later
 * Gradle plugin 3.1 and Gradle 4.4 or later
 * `ACCESS_FINE_LOCATION` permission.
 
-It is recommended `minSdkVersion` 21.
+It is recommended `minSdkVersion` 21, `targetSdkVersion` 27, and Google Play Services v15.0.1.
+
+Study [the example](https://github.com/aMarCruz/react-native-google-places-ui/tree/master/examples/placesuidemo) to know how to setup this versions.
 
 ## Install
 
@@ -44,7 +47,7 @@ It is recommended `minSdkVersion` 21.
     </application>
     ```
 
-    See [the example](examples/placesuidemo) to know how to configure rn-google-places-ui and the new Gradle plugin.
+    See [the example](https://github.com/aMarCruz/react-native-google-places-ui/tree/master/examples/placesuidemo) to know how to configure rn-google-places-ui and the new Gradle plugin.
 
     See more on [Get API Key and Signup](https://developers.google.com/places/android-sdk/signup) on the Google docs.
 
@@ -82,6 +85,8 @@ website | string or undefined | The URI of the website of this place or `undefin
 ## TODO
 
 - [X] Example
+- [ ] Detection of Google Play Services
 - [ ] iOS support
 
+[npm-image]:      https://img.shields.io/npm/v/react-native-google-places-ui.svg
 [license-image]:  https://img.shields.io/npm/l/express.svg
