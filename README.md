@@ -34,6 +34,8 @@ It is recommended `minSdkVersion` 21.
     Add your API key to your android/app/src/main/AndroidManifest.xml inside the `application` tag, as shown in the following code sample, replacing `YOUR_API_KEY` with your own API key:
 
     ```xml
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application ...>
         ...
         <meta-data
@@ -42,12 +44,9 @@ It is recommended `minSdkVersion` 21.
     </application>
     ```
 
-    See more on [Get API Key and Signup](https://developers.google.com/places/android-sdk/signup) on the Google docs.
+    See [the example](examples/placesuidemo) to know how to configure rn-google-places-ui and the new Gradle plugin.
 
-4. Also, enable the required permissions in your android/app/src/main/AndroidManifest.xml:
-    ```xml
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    ```
+    See more on [Get API Key and Signup](https://developers.google.com/places/android-sdk/signup) on the Google docs.
 
 ## PlaceAutocomplete
 
@@ -74,15 +73,15 @@ latlng | `LatLng` | Location of this Place.<br>The location is not necessarily t
 locale | string or undefined | The locale in which the names and addresses were localized.
 name | string | Name of this Place.<br>The name is localized according to the locale property.
 phoneNumber | string or undefined | The place's phone number in international format, `undefined` if no phone number is known or the place has no phone number.<br>International format includes the country code, and is prefixed with the plus (+) sign. For example, the international phone number for Google's Mountain View, USA office is +1 650-253-0000.
-placeTypes | number[] | List of place types for this Place.<br>The elements of this list are drawn from `PlaceType` constants of the default export, though one should expect there could be new place types returned that were introduced after an app was published.
+placeTypes | string[] | List of place types for this Place.
 priceLevel | number | The price level on a scale from 0 to 4 or a negative value if no price level is known.<br>The exact amount indicated by a specific value will vary from region to region. Price levels are interpreted as follows:<br>0 — Free<br>1 — Inexpensive<br>2 — Moderate<br>3 — Expensive<br>4 — Very Expensive
 rating | number | Place's rating, from 1.0 to 5.0, based on aggregated user reviews, or a negative value if no rating is known.
 viewport | `LatLngBounds` or undefined | Viewport of a size that is suitable for displaying this Place.<br>For example, a Place representing a store may have a relatively small viewport, while a Place representing a country may have a very large viewport.<br>May be undefined if the size of the place is not known.
-websiteUri | string or undefined | The URI of the website of this place or `undefined` if no website is known.<br>This is the URI of the website maintained by the Place, if available. Note this is a third-party website not affiliated with the Places API.
+website | string or undefined | The URI of the website of this place or `undefined` if no website is known.<br>This is the URI of the website maintained by the Place, if available. Note this is a third-party website not affiliated with the Places API.
 
 ## TODO
 
-- [ ] Example
+- [X] Example
 - [ ] iOS support
 
 [license-image]:  https://img.shields.io/npm/l/express.svg

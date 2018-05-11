@@ -1,0 +1,50 @@
+{
+  "name": "placesuidemo",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "clean": "rimraf $TMPDIR/react-* && watchman watch-del-all && cd android && ./gradlew clean",
+    "genjs": "rimraf ~js && mkdir ~js && echo '**'>~js/.eslintignore && tsc -p . --noEmit false",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "16.3.1",
+    "react-native": "0.55.4",
+    "react-native-google-places-ui": "../react-native-google-places-ui.tgz",
+    "react-navigation": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.3.14",
+    "@types/react-native": "^0.55.12",
+    "@types/react-navigation": "^1.5.11",
+    "babel-jest": "22.4.3",
+    "babel-preset-react-native": "4.0.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.7.0",
+    "jest": "22.4.3",
+    "react-native-typescript-transformer": "^1.2.5",
+    "react-test-renderer": "16.3.1",
+    "rimraf": "^2.6.2",
+    "tslib": "^1.9.0",
+    "typescript": "^2.8.3",
+    "typescript-eslint-parser": "^15.0.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transform": {
+      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.tsx?$": "<rootDir>/jest-pp.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/~js/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}

@@ -19,7 +19,7 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-import com.github.amarcruz.yalog.Log;
+import io.github.amarcruz.yalog.Log;
 
 import java.util.concurrent.Callable;
 

@@ -55,3 +55,5 @@ react-native-dialogs.iml
 .gradle
 local.properties
 android/*.iml
+
+~assets/

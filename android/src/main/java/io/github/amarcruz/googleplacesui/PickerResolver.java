@@ -6,7 +6,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlacesStatusCodes;
 
-import com.github.amarcruz.yalog.Log;
+import io.github.amarcruz.yalog.Log;
 
 class PickerResolver {
     static private final String TAG = Constants.TAG;

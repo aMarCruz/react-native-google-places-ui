@@ -11,5 +11,3 @@ export function placesAutocomplete (options) {
 export function placePicker (options) {
   return PlacesUI.placePicker(options || null)
 }
-
-export const PlaceType = PlacesUI.PlaceType

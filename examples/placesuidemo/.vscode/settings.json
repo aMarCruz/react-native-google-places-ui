@@ -1,0 +1,20 @@
+{
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "typescript.format.insertSpaceAfterConstructor": true,
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.useCodeSnippetsOnMethodSuggest": true,
+  "tslint.enable": false,
+  "eslint.enable": true,
+  "eslint.packageManager": "yarn",
+  "eslint.workingDirectories": [
+    "~js",
+    "./src"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+}

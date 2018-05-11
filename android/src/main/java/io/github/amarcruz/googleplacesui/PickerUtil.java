@@ -39,7 +39,7 @@ class PickerUtil {
         final WritableMap viewport = getViewport(place.getViewport());
         final Locale locale = place.getLocale();
         final List<Integer> types = place.getPlaceTypes();
-        final Uri websiteUri = place.getWebsiteUri();
+        final Uri website = place.getWebsiteUri();
 
         final WritableMap result = Arguments.createMap();
 
@@ -60,8 +60,8 @@ class PickerUtil {
         if (viewport != null) {
             result.putMap("viewport", viewport);
         }
-        if (websiteUri != null) {
-            result.putString("websiteUri", websiteUri.toString());
+        if (website != null) {
+            result.putString("website", website.toString());
         }
 
         return result;
@@ -159,7 +159,7 @@ class PickerUtil {
 
         if (types != null) {
             for (int type : types) {
-                placeTypes.pushInt(type);
+                placeTypes.pushString(PlaceTypes.getPlaceTypeById(type));
             }
         }
         return placeTypes;

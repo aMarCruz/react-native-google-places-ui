@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "es2017",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "importHelpers": true,
+    "noEmitHelpers": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "newLine": "lf",
+    "charset": "utf8",
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "pretty": true,
+    "outDir": "./~js"
+  },
+  "files": [
+    "index.js",
+  ],
+  "include": [
+    "src/**/*"
+  ]
+}

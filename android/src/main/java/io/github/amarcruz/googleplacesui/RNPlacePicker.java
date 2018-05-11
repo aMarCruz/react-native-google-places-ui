@@ -15,7 +15,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-import com.github.amarcruz.yalog.Log;
+import io.github.amarcruz.yalog.Log;
 
 import java.util.concurrent.Callable;
 
@@ -79,6 +79,8 @@ class RNPlacePicker extends BaseActivityEventListener {
 
                 case PlacePicker.RESULT_ERROR:
                     Status status = data == null ? null : PlacePicker.getStatus(activity, data);
+                    Log.v(Constants.TAG, "getStatus() data is null? " + (data == null));
+                    Log.v(Constants.TAG, "getStatus() returns null? " + (status == null));
                     mResolver.error(status);
                     break;
 

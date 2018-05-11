@@ -1,0 +1,5 @@
+rootProject.name = 'placesuidemo'
+include ':react-native-google-places-ui'
+project(':react-native-google-places-ui').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-google-places-ui/android')
+
+include ':app'

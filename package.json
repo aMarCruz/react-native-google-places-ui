@@ -1,11 +1,12 @@
 {
   "name": "react-native-google-places-ui",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "description": "React Native wrapper for Google Place UI widgets",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "rm -rf android/build"
+    "android:mktar": "yarn pack -f ./examples/react-native-google-places-ui.tgz",
+    "prepublish": "rm -rf android/build && yarn android:mktar"
   },
   "repository": {
     "type": "git",
