@@ -1,6 +1,6 @@
 {
   "name": "react-native-google-places-ui",
-  "version": "0.1.0-beta.3",
+  "version": "0.2.0",
   "description": "React Native wrapper for Google Place UI widgets",
   "main": "index.js",
   "scripts": {
@@ -23,11 +23,12 @@
   ],
   "author": "aMarCruz",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/aMarCruz/react-native-google-places-ui/issues"
-  },
+  "bugs": "https://github.com/aMarCruz/react-native-google-places-ui/issues",
   "homepage": "https://github.com/aMarCruz/react-native-google-places-ui#README",
   "peerDependencies": {
-    "react-native": ">=0.50.0"
+    "react-native": ">=0.57.0"
+  },
+  "devDependencies": {
+    "react-native": "^0.59.2"
   }
 }

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 
 import com.facebook.react.bridge.Arguments;
@@ -14,7 +13,6 @@ import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.PermissionAwareActivity;
-import com.facebook.react.modules.core.PermissionListener;
 
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
@@ -67,41 +65,50 @@ class PickerUtil {
         return result;
     }
 
-    @NonNull
-    static WritableMap fromLatLng(@NonNull final LatLng src) {
+    static WritableMap fromLatLng(final LatLng src) {
         final WritableMap loc = Arguments.createMap();
 
-        loc.putDouble("latitude", src.latitude);
-        loc.putDouble("longitude", src.longitude);
+        loc.putDouble("latitude", src != null ? src.latitude : 0);
+        loc.putDouble("longitude", src != null ? src.longitude : 0);
 
         return loc;
     }
 
-    static LatLngBounds getBoundsFromArray(@NonNull final ReadableArray src) {
+    static LatLngBounds getBoundsFromArray(final ReadableArray src) {
         final LatLngBounds.Builder builder = LatLngBounds.builder();
         final int len = src.size();
         int points = 0;
 
         for (int i = 0; i < len; i++) {
             if (src.getType(i) == ReadableType.Map) {
-                builder.include(toLatLng(src.getMap(i)));
+                final LatLng latLng = toLatLng(src.getMap(i));
+
+                if (latLng != null) {
+                    builder.include(latLng);
+                }
                 points++;
             }
         }
         return points > 0 ? builder.build() : null;
     }
 
-    static LatLngBounds getBounds(@NonNull final ReadableMap src) throws Exception {
+    static LatLngBounds getBounds(final ReadableMap src) throws Exception {
         final String prop = "bounds";
 
         if (src.hasKey(prop)) {
             final ReadableType type = src.getType(prop);
 
             if (type == ReadableType.Array) {
-                return getBoundsFromArray(src.getArray(prop));
+                final ReadableArray arr = src.getArray(prop);
+                if (arr != null) {
+                    return getBoundsFromArray(arr);
+                }
             }
             if (type == ReadableType.Map) {
-                return getLatLngBounds(src.getMap(prop));
+                final ReadableMap map = src.getMap(prop);
+                if (map != null) {
+                    return getLatLngBounds(map);
+                }
             }
             if (type != ReadableType.Null) {
                 throw new Exception("'bounds' must be LatLng[] or LatLngBounds.");
@@ -111,34 +118,30 @@ class PickerUtil {
         return null;
     }
 
-    static boolean hasPermissions(@NonNull final Activity activity) {
+    static boolean hasPermissions(final Activity activity) {
         return ActivityCompat.checkSelfPermission(
                 activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
     static void withPermissions(
-            @NonNull final Activity activity,
-            @NonNull final PickerResolver resolver,
-            @NonNull final Callable<Void> callback)
+            final Activity activity,
+            final PickerResolver resolver,
+            final Callable<Void> callback)
     {
         final String[] required = {Manifest.permission.ACCESS_FINE_LOCATION};
 
-        ((PermissionAwareActivity) activity).requestPermissions(required, 1, new PermissionListener() {
-            @Override
-            public boolean onRequestPermissionsResult(final int requestCode,
-                    @NonNull final String[] permissions, @NonNull final int[] result) {
+        ((PermissionAwareActivity) activity).requestPermissions(required, 1, (requestCode, permissions, result) -> {
 
-                if (result.length > 0 && result[0] == PackageManager.PERMISSION_GRANTED) {
-                    try {
-                        callback.call();
-                    } catch (Exception ex) {
-                        resolver.error(E_CALLBACK_ERROR, ex);
-                    }
-                } else {
-                    resolver.error(E_PERMISSIONS_MISSING,  new Exception("Required permission missing"));
+            if (result.length > 0 && result[0] == PackageManager.PERMISSION_GRANTED) {
+                try {
+                    callback.call();
+                } catch (Exception ex) {
+                    resolver.error(E_CALLBACK_ERROR, ex);
                 }
-                return true;
+            } else {
+                resolver.error(E_PERMISSIONS_MISSING,  new Exception("Required permission missing"));
             }
+            return true;
         });
     }
 
@@ -165,10 +168,16 @@ class PickerUtil {
         return placeTypes;
     }
 
-    private static LatLngBounds getLatLngBounds(@NonNull final ReadableMap src) {
+    private static LatLngBounds getLatLngBounds(final ReadableMap src) {
+        final ReadableMap southwest = src.getMap("southwest");
+        final ReadableMap northeast = src.getMap("northeast");
+
+        if (southwest == null || northeast == null) {
+            return null;
+        }
         return new LatLngBounds(
-                toLatLng(src.getMap("southwest")),
-                toLatLng(src.getMap("northeast"))
+                toLatLng(southwest),
+                toLatLng(northeast)
         );
     }
 

@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 
 import io.github.amarcruz.yalog.Log;
 
+@SuppressWarnings("unused")
 class GooglePlacesModule extends ReactContextBaseJavaModule {
     private static final String TAG = Constants.TAG;
 
@@ -38,7 +39,6 @@ class GooglePlacesModule extends ReactContextBaseJavaModule {
         return TAG;
     }
 
-    @SuppressWarnings("unused")
     @ReactMethod
     public void placeAutocomplete(final ReadableMap options, final Promise promise) {
         final Activity activity = getCurrentActivity();
@@ -50,7 +50,6 @@ class GooglePlacesModule extends ReactContextBaseJavaModule {
         mPlaceAutocomplete.pick(activity, options, promise);
     }
 
-    @SuppressWarnings("unused")
     @ReactMethod
     public void placePicker(final ReadableMap options, final Promise promise) {
         final Activity activity = getCurrentActivity();
@@ -62,7 +61,6 @@ class GooglePlacesModule extends ReactContextBaseJavaModule {
         mPlacePicker.pick(activity, options, promise);
     }
 
-    @SuppressWarnings("unused")
     @ReactMethod
     public void getLastBounds(final Promise promise) {
         final LatLngBounds bounds = mPlacePicker.getLastBounds();
@@ -70,7 +68,6 @@ class GooglePlacesModule extends ReactContextBaseJavaModule {
         promise.resolve(PickerUtil.getViewport(bounds));
     }
 
-    @SuppressWarnings("unused")
     @ReactMethod
     public void buildBounds(final ReadableArray src, final Promise promise) {
         try {
@@ -91,7 +88,6 @@ class GooglePlacesModule extends ReactContextBaseJavaModule {
         }
     }
 
-    @SuppressWarnings("unused")
     @ReactMethod
     public void setLogLevel(final int level) {
         Log.setLevel(level);

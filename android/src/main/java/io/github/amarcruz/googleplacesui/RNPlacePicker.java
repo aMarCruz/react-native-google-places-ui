@@ -17,8 +17,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 
 import io.github.amarcruz.yalog.Log;
 
-import java.util.concurrent.Callable;
-
 class RNPlacePicker extends BaseActivityEventListener {
 
     private static final int PLACE_REQUEST = Constants.PLACE_PICKER_RC;
@@ -45,12 +43,9 @@ class RNPlacePicker extends BaseActivityEventListener {
             if (PickerUtil.hasPermissions(activity)) {
                 activity.startActivityForResult(intent, PLACE_REQUEST);
             } else {
-                PickerUtil.withPermissions(activity, mResolver, new Callable<Void>() {
-                    @Override
-                    public Void call() {
-                        activity.startActivityForResult(intent, PLACE_REQUEST);
-                        return null;
-                    }
+                PickerUtil.withPermissions(activity, mResolver, () -> {
+                    activity.startActivityForResult(intent, PLACE_REQUEST);
+                    return null;
                 });
             }
         } catch (GooglePlayServicesNotAvailableException |

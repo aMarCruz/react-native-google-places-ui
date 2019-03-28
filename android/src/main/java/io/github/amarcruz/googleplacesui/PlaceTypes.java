@@ -1,13 +1,8 @@
 package io.github.amarcruz.googleplacesui;
 
-import android.util.ArrayMap;
 import android.util.SparseArray;
 
 import com.google.android.gms.location.places.Place;
-
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
 
 final class PlaceTypes {
 

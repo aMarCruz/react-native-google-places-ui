@@ -2,7 +2,6 @@ package io.github.amarcruz.googleplacesui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 
 import com.facebook.react.bridge.BaseActivityEventListener;
 import com.facebook.react.bridge.Promise;
@@ -21,8 +20,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 
 import io.github.amarcruz.yalog.Log;
 
-import java.util.concurrent.Callable;
-
 class RNPlaceAutocomplete extends BaseActivityEventListener {
     private static final int PLACE_REQUEST = Constants.PLACE_AUTOCOMPLETE_RC;
 
@@ -32,7 +29,7 @@ class RNPlaceAutocomplete extends BaseActivityEventListener {
         reactContext.addActivityEventListener(this);
     }
 
-    public void pick(final Activity activity, final ReadableMap opts, final Promise promise) {
+    void pick(final Activity activity, final ReadableMap opts, final Promise promise) {
 
         mResolver = new PickerResolver(promise);
 
@@ -47,12 +44,9 @@ class RNPlaceAutocomplete extends BaseActivityEventListener {
             if (PickerUtil.hasPermissions(activity)) {
                 activity.startActivityForResult(intent, PLACE_REQUEST);
             } else {
-                PickerUtil.withPermissions(activity, mResolver, new Callable<Void>() {
-                    @Override
-                    public Void call() {
-                        activity.startActivityForResult(intent, PLACE_REQUEST);
-                        return null;
-                    }
+                PickerUtil.withPermissions(activity, mResolver, () -> {
+                    activity.startActivityForResult(intent, PLACE_REQUEST);
+                    return null;
                 });
             }
         } catch (GooglePlayServicesNotAvailableException | GooglePlayServicesRepairableException e) {
@@ -103,6 +97,10 @@ class RNPlaceAutocomplete extends BaseActivityEventListener {
                     final ReadableMap map = opts.getMap("filter");
                     AutocompleteFilter.Builder _filter = new AutocompleteFilter.Builder();
 
+                    if (map == null) {
+                        return null;
+                    }
+
                     if (map.hasKey("country")) {
                         if (map.getType("country") == ReadableType.String) {
                             filter = _filter;
@@ -133,12 +131,15 @@ class RNPlaceAutocomplete extends BaseActivityEventListener {
         return null;
     }
 
-    private int getPickerMode(@NonNull final ReadableMap map) throws Exception {
+    private int getPickerMode(final ReadableMap map) throws Exception {
         final ReadableType type = map.getType("mode");
 
         if (type == ReadableType.String) {
             final String modeStr = map.getString("mode");
 
+            if (modeStr == null) {
+                return PlaceAutocomplete.MODE_FULLSCREEN;
+            }
             switch (modeStr.toLowerCase()) {
                 case "fullscreen":
                     return PlaceAutocomplete.MODE_FULLSCREEN;
@@ -146,10 +147,6 @@ class RNPlaceAutocomplete extends BaseActivityEventListener {
                     return PlaceAutocomplete.MODE_OVERLAY;
             }
             throw new Exception("Unknown mode '" + modeStr + "'");
-        }
-
-        if (type == null) {
-            return PlaceAutocomplete.MODE_FULLSCREEN;
         }
 
         throw new Exception("Type mismatch on `mode`");
@@ -161,21 +158,23 @@ class RNPlaceAutocomplete extends BaseActivityEventListener {
         if (type == ReadableType.String) {
             final String typeStr = map.getString("type");
 
-            switch (typeStr.toLowerCase()) {
-                case "address":
-                    return AutocompleteFilter.TYPE_FILTER_ADDRESS;
-                case "cities":
-                    return AutocompleteFilter.TYPE_FILTER_CITIES;
-                case "establishment":
-                    return AutocompleteFilter.TYPE_FILTER_ESTABLISHMENT;
-                case "geocode":
-                    return AutocompleteFilter.TYPE_FILTER_GEOCODE;
-                case "regions":
-                    return AutocompleteFilter.TYPE_FILTER_REGIONS;
-                case "":
-                    return AutocompleteFilter.TYPE_FILTER_NONE;
+            if (typeStr != null) {
+                switch (typeStr.toLowerCase()) {
+                    case "address":
+                        return AutocompleteFilter.TYPE_FILTER_ADDRESS;
+                    case "cities":
+                        return AutocompleteFilter.TYPE_FILTER_CITIES;
+                    case "establishment":
+                        return AutocompleteFilter.TYPE_FILTER_ESTABLISHMENT;
+                    case "geocode":
+                        return AutocompleteFilter.TYPE_FILTER_GEOCODE;
+                    case "regions":
+                        return AutocompleteFilter.TYPE_FILTER_REGIONS;
+                    case "":
+                        return AutocompleteFilter.TYPE_FILTER_NONE;
+                }
+                throw new Exception("Unknown filter type '" + typeStr + "'");
             }
-            throw new Exception("Unknown filter type '" + typeStr + "'");
         }
 
         if (type == ReadableType.Null) {

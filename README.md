@@ -10,24 +10,36 @@ React native implementation of the Google Places UI widgets (only for Android fo
 ![PlacePicker](images/acw_overlay.jpg)
 
 Requeriments:
-* React Native v0.50.0 or later (not tested with previous versions).
-* Google Play Services v11.2 or later
-* Gradle plugin 3.1 and Gradle 4.4 or later
-* `ACCESS_FINE_LOCATION` permission.
 
-It is recommended `minSdkVersion` 21, `targetSdkVersion` 27, and Google Play Services v15.0.1.
+- React Native v0.57.0 or later (not tested with previous versions).
+- Gradle Gradle 4.6 or later
+- `ACCESS_FINE_LOCATION` permission.
+
+react-native-google-places-ui can use global "ext" variables for its configuration.
+
+The variables and their defaults:
+
+- `playServicesPlacesVersion` : '16.0.0'
+- `googlePlayServicesMapsVersion` : '16.0.0'
+- `buildToolsVersion` : '28.0.3'
+- `minSdkVersion` : 21
+- `compileSdkVersion` : 28
+- `targetSdkVersion` : 28
+- `supportLibVersion` : '28.0.0'
 
 Study [the example](https://github.com/aMarCruz/react-native-google-places-ui/tree/master/examples/placesuidemo) to know how to setup this versions.
 
 ## Install
 
 1. Install the wrapper from npm and link it:
+
     ```bash
-    $ yarn add react-native-google-places-ui
-    $ react-native link react-native-google-places-ui
+    yarn add react-native-google-places-ui
+    react-native link react-native-google-places-ui
     ```
 
-2. Replace 'compile' with 'implementation' in your android/app/build.gradle. It must looks like:
+2. Ensure that 'implementation' is used in your android/app/build.gradle. It must looks like:
+
     ```gradle
     implementation project(':react-native-google-places-ui')
     ```
@@ -88,5 +100,16 @@ website | string or undefined | The URI of the website of this place or `undefin
 - [ ] Detection of Google Play Services
 - [ ] iOS support
 
+## Support my Work
+
+I'm a full-stack developer with more than 20 year of experience and I try to share most of my work for free and help others, but this takes a significant amount of time and effort so, if you like my work, please consider...
+
+[<img src="https://amarcruz.github.io/images/kofi_blue.png" height="36" title="Support Me on Ko-fi" />][kofi-url]
+
+Of course, feedback, PRs, and stars are also welcome 🙃
+
+Thanks for your support!
+
 [npm-image]:      https://img.shields.io/npm/v/react-native-google-places-ui.svg
 [license-image]:  https://img.shields.io/npm/l/express.svg
+[kofi-url]:       https://ko-fi.com/C0C7LF7I
